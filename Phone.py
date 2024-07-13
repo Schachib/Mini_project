@@ -11,5 +11,3 @@ class Phone:
 rotary_phone = Phone(dial_type_value='дисковый')
 keypad_phone = Phone(dial_type_value='кнопочный')
 voice_phone = Phone(dial_type_value='голосовой')
-
-
