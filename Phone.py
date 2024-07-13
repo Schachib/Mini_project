@@ -2,7 +2,7 @@ class Phone:
     # Настройки телефона
     line_type = 'проводной'
 
-    def __init__(self, dial_type_value='Брак') -> None:
+    def __init__(self, dial_type_value) -> None:
         self.dial_type = dial_type_value  # это атрибут объекта
         print(self.__dict__)
 
@@ -20,13 +20,9 @@ class Phone:
     def get_missed_call(self):
         print('Запрос кол-ва пропузенных звонков.')
 
+    def __str__(self) -> str:
+        return f'Это {self.line_type} телефон. Набор - {self.dial_type}.'
+
 
 rotary_phone = Phone(dial_type_value='дисковый')
-keypad_phone = Phone(dial_type_value='кнопочный')
-voice_phone = Phone(dial_type_value='голосовой')
-
-rotary_phone.ring()
-rotary_phone.call('234-5678')
-rotary_phone.get_missed_call()
-rotary_phone.dial_type_upgrade('дисковый')
-print(rotary_phone.dial_type)
+print(rotary_phone)

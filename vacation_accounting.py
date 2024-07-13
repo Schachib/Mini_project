@@ -15,7 +15,7 @@ class Employee:
 
     def display_info(self):
         return (f'Имя: {self.first_name}, Фамилия: {self.second_name}, Пол:'
-                f' {self.gender}, Отпускных дней в году: {self.vacation_days}.')
+                f' {self.gender}, Отп-ных дней в году: {self.vacation_days}.')
 
 
 # Создайте экземпляры класса Employee с различными значениями атрибутов.
