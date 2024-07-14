@@ -22,9 +22,11 @@ goods = {
 
 
 def add(items, title, amount, expiration_date=None):
-    expiration_date = datetime.strptime(expiration_date, DATE_FORMAT).date() if expiration_date else expiration_date
+    expiration_date = datetime.strptime(
+        expiration_date, DATE_FORMAT).date() if expiration_date else expiration_date
     if title in items:
-        items[title].append({'amount': amount, 'expiration_date': expiration_date})
+        items[title].append(
+            {'amount': amount, 'expiration_date': expiration_date})
     else:
         items[title] = [{'amount': amount, 'expiration_date': expiration_date}]
 
@@ -32,9 +34,11 @@ def add(items, title, amount, expiration_date=None):
 def add_by_note(items, note):
     #  Добавление продукта
     hare_str = note.split(' ')  # [ 'Яйца', 'Фабрики', '№1', '4', '2024-07-15']
-    expiration_date = hare_str[-1] if len(hare_str[-1].split('-')) == 3 else None
+    expiration_date = hare_str[-1] if len(
+        hare_str[-1].split('-')) == 3 else None
     check_amount = Decimal(hare_str[-2] if expiration_date else hare_str[-1])
-    product_name = ' '.join(hare_str[:-2] if expiration_date else hare_str[:-1])
+    product_name = ' '.join(
+        hare_str[:-2] if expiration_date else hare_str[:-1])
     add(items, product_name, check_amount, expiration_date)
 
 
@@ -49,6 +53,7 @@ def find(items, needle):
     # Укороченный вариант
     # return [title for title in items if needle.lower() in title.lower()]
 
+
 def amount(items, needle):
     # Подсчёт продукта после поиска на навзанию
     title_list = find(items, needle)  # Тут могла быть ваша реклама
@@ -60,6 +65,7 @@ def amount(items, needle):
     return Decimal(sum_amout)
     # Укороченный вариант
     # return sum(item['amount'] for title, value in items.items() for item in value if title in title_list)
+
 
 def expire(items, in_advance_days=0):
     # Проверка срока годности товара по дате
@@ -75,7 +81,7 @@ def expire(items, in_advance_days=0):
             expired_products.append((key, total_amount))
     return expired_products
     # Укороченный вариант
-    #date_now = datetime.today().date() + timedelta(days=in_advance_days)
+    # date_now = datetime.today().date() + timedelta(days=in_advance_days)
     #    expired_products = [
     #        (key, sum(item['amount'] for item in value if item['expiration_date'] and date_now >= item['expiration_date']))
     #        for key, value in items.items() if
