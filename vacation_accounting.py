@@ -1,3 +1,6 @@
+from datetime import datetime, timedelta
+
+
 class Employee:
     vacation_days = 28
 
@@ -5,23 +8,35 @@ class Employee:
         self.first_name = first_name
         self.second_name = second_name
         self.gender = gender
-        self.remaining_vacation_days = self.vacation_days
+        self.remaining_vacation_days = Employee.vacation_days
 
-    def consume_vacation(self, vacation_days_spent):
-        self.remaining_vacation_days -= vacation_days_spent
+    def consume_vacation(self, days):
+        self.remaining_vacation_days -= days
 
     def get_vacation_details(self):
         return f'Остаток отпускных дней: {self.remaining_vacation_days}.'
 
-    def display_info(self):
-        return (f'Имя: {self.first_name}, Фамилия: {self.second_name}, Пол:'
-                f' {self.gender}, Отп-ных дней в году: {self.vacation_days}.')
+# Расширьте класс Employee, создав классы FullTimeEmployee и PartTimeEmployee.
 
 
-# Создайте экземпляры класса Employee с различными значениями атрибутов.
-employee1 = Employee('Khabib', 'Shamkhalov', 'м')
-employee2 = Employee('Хабиб', 'Шамхалов', "м")
+class FullTimeEmployee(Employee):
+    def get_unpaid_vacation(self, begin_vacation: str, days: int):
+        self.begin_date = datetime.strptime(begin_vacation, '%Y-%m-%d').date()
+        self.end_date = self.begin_date + timedelta(days=days)
+        return (f'Начало неоплачиваемого отпуска: {begin_vacation}, '
+                f'продолжительность: {(self.end_date - self.begin_date).days} дней.')
 
-# Вывод информации о сотрудниках.
-employee1.consume_vacation(7)
-print(employee1.get_vacation_details())
+
+class PartTimeEmployee(Employee):
+    vacation_days = 14
+
+    def __init__(self, first_name, second_name, gender):
+        super().__init__(first_name, second_name, gender)
+        self.remaining_vacation_days = PartTimeEmployee.vacation_days
+
+
+# Пример использования:
+full_time_employee = FullTimeEmployee('Роберт', 'Крузо', 'м')
+print(full_time_employee.get_unpaid_vacation('2023-07-01', 5))
+part_time_employee = PartTimeEmployee('Алёна', 'Пятницкая', 'ж')
+print(part_time_employee.get_vacation_details())
